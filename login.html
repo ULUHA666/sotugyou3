@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ログイン画面</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- ESモジュールとしてスクリプトを読み込む -->
+  <script type="module" src="js/login.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <img src="img/loginn.png" alt="ログイン画像" class="login-image">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email">
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password">
+    </div>
+    <div class="button-container">
+      <button id="login-button" class="login-button">Login</button>
+      <a href="signup.html" class="signup-link">新規登録</a>
+    </div>
+    <div id="message"></div>
+  </div>
+</body>
+
+</html>

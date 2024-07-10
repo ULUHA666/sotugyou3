@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登録情報表示</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- FirebaseのSDKを読み込む -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <img src="img/kaiinn.png" alt="ログイン画像" class="login-image">
+
+        <h2>登録情報表示</h2>
+        <div id="user-info">
+            <!-- データを表示するための要素 -->
+        </div>
+        <div class="button-container">
+            <button class="edit-button" onclick="redirect()">修正</button>
+            <button id="logout-button" class="logout-button">ログアウト</button>
+        </div>
+    </div>
+    <script src="js/display.js"></script> <!-- Firebaseからデータを取得して表示するJavaScript -->
+</body>
+</html>

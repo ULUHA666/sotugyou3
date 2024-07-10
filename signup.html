@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新規登録</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Firebase の CDN からのダウンロード -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <img src="img/toroku.png" alt="ログイン画像" class="login-image">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email">
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <label for="password" id="password-hint">※半角英数８文字〜１６文字以内</label>
+            <input type="password" id="password">
+        </div>
+        <div class="form-group">
+            <label for="name">名前:</label>
+            <input type="text" id="name">
+        </div>
+        <div class="form-group">
+            <label for="address">住所:</label>
+            <input type="text" id="address">
+        </div>
+        <div class="form-group">
+            <label for="profilePicture">身分証:</label>
+            <label for="profilePicture">※免許証</label>
+            <label for="profilePicture">※パスポート</label>
+            <label for="profilePicture">※マイナンバーカード</label>
+            <input type="file" id="profilePicture" accept="image/*">
+        </div>
+        <div class="button-container">
+            <button class="signup-button" onclick="confirmSignup()">登録</button>
+        </div>
+        <div id="message"></div>
+    </div>
+
+    <!-- Firebase SDK の初期化と設定 -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDkDYPvhxXMbWWt47Ec7_2-KzOcvM0AP9c",
+            authDomain: "graduation-a857b.firebaseapp.com",
+            databaseURL: "https://graduation-a857b-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "graduation-a857b",
+            storageBucket: "graduation-a857b.appspot.com",
+            messagingSenderId: "96504372176",
+            appId: "1:96504372176:web:2f1b75466066155cb837d5",
+            measurementId: "G-QB6S1TL34V"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+        const storage = firebase.storage();
+
+        function confirmSignup() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const name = document.getElementById('name').value;
+            const address = document.getElementById('address').value;
+            const profilePicture = document.getElementById('profilePicture').files[0];
+
+            if (password.length < 8 || password.length > 16) {
+                document.getElementById('message').innerText = 'パスワードは8文字以上16文字以内で入力してください。';
+                return;
+            }
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+
+                    // 画像をFirebase Storageにアップロード
+                    const storageRef = storage.ref('profile_pictures/' + user.uid + '/' + profilePicture.name);
+                    const uploadTask = storageRef.put(profilePicture);
+
+                    uploadTask.on('state_changed', 
+                        (snapshot) => {
+                            // 進行状況を表示するためのコード（オプション）
+                        }, 
+                        (error) => {
+                            // アップロードエラー処理
+                            console.error('アップロードエラー:', error);
+                            document.getElementById('message').innerText = '画像のアップロードに失敗しました。';
+                        }, 
+                        () => {
+                            // アップロード完了後の処理
+                            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                                // Realtime Database にユーザー情報を保存
+                                database.ref('users/' + user.uid).set({
+                                    email: email,
+                                    name: name,
+                                    address: address,
+                                    profilePicture: downloadURL // 画像のURLを保存
+                                });
+
+                                document.getElementById('message').innerText = 'ユーザーが正常に作成されました。リダイレクト中...';
+                                window.location.href = "login.html";
+                            });
+                        }
+                    );
+                })
+                .catch((error) => {
+                    if (error.code === 'auth/email-already-in-use') {
+                        document.getElementById('message').innerText = 'このメールアドレスは既に使用されています。ログインしてください。';
+                    } else {
+                        const errorMessage = error.message;
+                        document.getElementById('message').innerText = `エラー: ${errorMessage}`;
+                    }
+                });
+        }
+    </script>
+
+    <!-- その他のスクリプト -->
+    <script src="js/app.js"></script>
+</body>
+</html>
