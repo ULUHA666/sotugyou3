@@ -5,14 +5,7 @@ import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/fir
 
 // Firebase SDKの設定情報を貼り付ける
 const firebaseConfig = {
-    apiKey: "AIzaSyDkDYPvhxXMbWWt47Ec7_2-KzOcvM0AP9c",
-    authDomain: "graduation-a857b.firebaseapp.com",
-    databaseURL: "https://graduation-a857b-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "graduation-a857b",
-    storageBucket: "graduation-a857b.appspot.com",
-    messagingSenderId: "96504372176",
-    appId: "1:96504372176:web:2f1b75466066155cb837d5",
-    measurementId: "G-QB6S1TL34V"
+  
 }
 
 // Firebaseの初期化
