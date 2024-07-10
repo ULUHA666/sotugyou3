@@ -1,13 +1,13 @@
 // Firebaseの初期化
 const firebaseConfig = {
-    apiKey: "AIzaSyDkDYPvhxXMbWWt47Ec7_2-KzOcvM0AP9c",
-    authDomain: "graduation-a857b.firebaseapp.com",
-    databaseURL: "https://graduation-a857b-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "graduation-a857b",
-    storageBucket: "graduation-a857b.appspot.com",
-    messagingSenderId: "96504372176",
-    appId: "1:96504372176:web:2f1b75466066155cb837d5",
-    measurementId: "G-QB6S1TL34V"
+    apiKey: "AvM0AP9c",
+    authDomain: "gcom",
+    databaseURL: "htpp",
+    projectId: "gb",
+    storageBucket: "gom",
+    messagingSenderId: "9176",
+    appId: "1:9",
+    measurementId: "4V"
 };
 
 firebase.initializeApp(firebaseConfig);
